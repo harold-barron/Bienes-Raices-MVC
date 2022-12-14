@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/harold-barron/Bienes-Raices-MVC/issues"
   },
-  "homepage": "https://github.com/harold-barron/Bienes-Raices-MVC#readme"
+  "homepage": "https://github.com/harold-barron/Bienes-Raices-MVC#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
