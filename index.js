@@ -1,15 +1,9 @@
 import express from 'express'
-
+import userRouter from './Router/userRouter.js'
 const app = express()
 const port = 3000 || process.env.port
 
-
-app.get('/',(req,res)  =>{
-    res.json({msg:'Concectado desde Express'})
-})
-
-
-
+app.use('/',userRouter)
 
 
 app.listen(port, () =>{
