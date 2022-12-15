@@ -1,13 +1,7 @@
 import express from "express";
-
+import {loginForm} from '../controllers/userController.js'
 const router = express.Router()
 
-router.get('/login',(req,res)  =>{
-    res.render('auth/login')
-})
-router.get('/about',(req,res)  =>{
-    res.json({msg:'About us'})
-})
-
+router.get('/login',loginForm)
 
 export default router
