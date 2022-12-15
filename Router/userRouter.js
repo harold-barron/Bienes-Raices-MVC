@@ -2,8 +2,8 @@ import express from "express";
 
 const router = express.Router()
 
-router.get('/',(req,res)  =>{
-    res.json({msg:'Concectado desde Express'})
+router.get('/login',(req,res)  =>{
+    res.render('auth/login')
 })
 router.get('/about',(req,res)  =>{
     res.json({msg:'About us'})
