@@ -6,7 +6,7 @@ const port = 3000 || process.env.port
 app.set('view engine','pug')
 app.set('views', './views')
 
-app.use('/',userRouter)
+app.use('/auth',userRouter)
 
 app.listen(port, () =>{
     console.log(`Server running on port ${port}` )
