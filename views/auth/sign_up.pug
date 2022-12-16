@@ -10,5 +10,14 @@ block  content
             .bg-withe.py-8.px-4.shadow
                 form(action="") 
                     div     
-                        label(for="nombre").block.text-sm.uppercase.text-gray-500.mb-2.font-bold Tu nombre 
-                        input(type="text")#nombre.w-full.px-3.py-2.border.border-gray-600.rounded-md.placeholder-gray-800(placeholder="Tu nombre")
+                        label(for="nombre").block.text-sm.uppercase.text-gray-500.mb-2.font-bold Name
+                        input(placeholder="Name" type="text" name="nombre")#nombre.w-full.px-3.py-2.border.border-gray-600.rounded-md.placeholder-gray-800
+                    div     
+                        label(for="email").block.text-sm.uppercase.text-gray-500.mb-2.font-bold Email
+                        input(placeholder="Email" type="email" name="email")#email.w-full.px-3.py-2.border.border-gray-600.rounded-md.placeholder-gray-800    
+                    div     
+                        label(for="password").block.text-sm.uppercase.text-gray-500.mb-2.font-bold Password
+                        input(placeholder="Password" type="password" name="password")#password.w-full.px-3.py-2.border.border-gray-600.rounded-md.placeholder-gray-800
+                    div     
+                        label(for="repeatedPassword").block.text-sm.uppercase.text-gray-500.mb-2.font-bold Repeat Password
+                        input(placeholder="Password" type="password" name="repeatedPassword")#repeatedPassword.w-full.px-3.py-2.border.border-gray-600.rounded-md.placeholder-gray-800    
