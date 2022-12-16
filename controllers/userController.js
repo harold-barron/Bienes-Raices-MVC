@@ -5,10 +5,8 @@ const loginForm = (req,res) =>{
 
 const signUpForm = (req,res) =>{
     res.render('auth/sign_up', {
-        
     })
 }
-
 
 export {
     loginForm,
