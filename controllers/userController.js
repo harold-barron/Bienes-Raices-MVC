@@ -10,7 +10,14 @@ const signUpForm = (req,res) =>{
     })
 }
 
+const resetPasswordForm = (req,res) =>{
+    res.render('auth/resetPassword', {
+        page: 'Reset password'
+    })
+}
+
 export {
     loginForm,
-    signUpForm
+    signUpForm,
+    resetPasswordForm
 }
