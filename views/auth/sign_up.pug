@@ -21,5 +21,8 @@ block  content
                     div     
                         label(for="repeatedPassword").block.text-sm.uppercase.text-gray-500.mb-2.font-bold Repeat Password
                         input(placeholder="Password" type="password" name="repeatedPassword")#repeatedPassword.w-full.px-3.py-2.border.border-gray-600.rounded-md.placeholder-gray-800    
-                    
+                    div.flex.items-center.justify-around
+                        a.text-gray-700.text-xs(href="/auth/login") Have an account? Login
+                        a.text-gray-700.text-xs(href="/auth/reset-password") Forgot my password
+
                     input(class ="w-full bg-red-600  hover:bg-pink-700 font-bold py-3 cursor-pointer" type="submit" value = "Create account")
