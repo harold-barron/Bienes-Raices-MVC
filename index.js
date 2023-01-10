@@ -1,10 +1,9 @@
 import express from 'express'
 import userRouter from './Router/userRouter.js'
-import db from './config/db.js'
+import db from './db/db.js'
 const app = express()
 const port = 3000 || process.env.port
-const pass=process.env.sequelizePassword
-console.log(pass)
+
 try{
     await db.authenticate();
     console.log('Succesfuly connectet to database')
