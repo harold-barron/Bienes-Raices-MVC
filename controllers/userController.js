@@ -10,6 +10,10 @@ const signUpForm = (req,res) =>{
     })
 }
 
+const createAccount = (req,res) =>{
+
+}
+
 const resetPasswordForm = (req,res) =>{
     res.render('auth/resetPassword', {
         page: 'Reset password'
@@ -19,5 +23,6 @@ const resetPasswordForm = (req,res) =>{
 export {
     loginForm,
     signUpForm,
+    createAccount,
     resetPasswordForm
 }
