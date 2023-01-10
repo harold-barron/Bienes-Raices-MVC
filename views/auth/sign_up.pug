@@ -8,7 +8,7 @@ block  content
 
         div.mt-8.mx-auto.max-w-md
             .bg-withe.py-8.px-4.shadow
-                form(action="").space-y-5
+                form(method = "POST" action="/auth/sign-up").space-y-5
                     div     
                         label(for="nombre").block.text-sm.uppercase.text-gray-500.mb-2.font-bold Name
                         input(placeholder="Name" type="text" name="nombre")#nombre.w-full.px-3.py-2.border.border-gray-600.rounded-md.placeholder-gray-800
