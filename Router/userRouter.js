@@ -1,8 +1,11 @@
 import express from "express";
-import {loginForm, signUpForm,resetPasswordForm} from '../controllers/userController.js'
+import {loginForm, signUpForm,createAccount,resetPas, createAccountswordForm} from '../controllers/userController.js'
 const router = express.Router()
 
 router.get('/login',loginForm)
 router.get('/sign-up',signUpForm)
+router.post('/sign-up',createAccount)
+
 router.get('/reset-password', resetPasswordForm)
+
 export default router
