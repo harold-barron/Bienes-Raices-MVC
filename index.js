@@ -4,6 +4,8 @@ import db from './db/db.js'
 const app = express()
 const port = 3000 || process.env.port
 
+app.use(express.urlencoded({extended:true}))
+
 try{
     await db.authenticate();
     console.log('Succesfuly connectet to database')
