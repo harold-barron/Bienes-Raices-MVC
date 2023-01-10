@@ -11,7 +11,7 @@ const signUpForm = (req,res) =>{
 }
 
 const createAccount = (req,res) =>{
-
+    console.log(req.body)
 }
 
 const resetPasswordForm = (req,res) =>{
