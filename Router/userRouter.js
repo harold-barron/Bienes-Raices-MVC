@@ -1,5 +1,5 @@
 import express from "express";
-import {loginForm, signUpForm,createAccount,resetPas, createAccountswordForm} from '../controllers/userController.js'
+import {loginForm, signUpForm,createAccount,resetPasswordForm} from '../controllers/userController.js'
 const router = express.Router()
 
 router.get('/login',loginForm)
