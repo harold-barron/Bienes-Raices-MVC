@@ -1,13 +1,16 @@
 import express from 'express'
 import userRouter from './Router/userRouter.js'
 import db from './db/db.js'
+
 const app = express()
-const port = 3000 || process.env.port
+const port =process.env.PORT
 
 app.use(express.urlencoded({extended:true}))
 
+
 try{
     await db.authenticate();
+    db.sync()
     console.log('Succesfuly connectet to database')
 } catch(error){
     console.log(error)

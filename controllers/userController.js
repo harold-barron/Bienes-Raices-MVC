@@ -1,3 +1,5 @@
+import User from '../models/userModel.js'
+
 const loginForm = (req,res) =>{
     res.render('auth/login', {
         page:'Login'
@@ -10,8 +12,10 @@ const signUpForm = (req,res) =>{
     })
 }
 
-const createAccount = (req,res) =>{
-    console.log(req.body)
+const createAccount = async(req,res) =>{
+   console.log(req.body)
+   const newUser = await User.create(req.body)
+   res.json(newUser)
 }
 
 const resetPasswordForm = (req,res) =>{
