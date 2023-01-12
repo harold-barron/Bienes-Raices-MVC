@@ -13,7 +13,6 @@ const signUpForm = (req,res) =>{
 }
 
 const createAccount = async(req,res) =>{
-   console.log(req.body)
    const newUser = await User.create(req.body)
    res.json(newUser)
 }
