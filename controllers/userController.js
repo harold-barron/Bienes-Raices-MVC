@@ -13,8 +13,10 @@ const signUpForm = (req,res) =>{
 }
 
 const createAccount = async(req,res) =>{
-   const newUser = await User.create(req.body)
-   res.json(newUser)
+    //console.log(req.body)
+
+    const newUser = await User.create(req.body)
+    res.json(newUser)
 }
 
 const resetPasswordForm = (req,res) =>{
