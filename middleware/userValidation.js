@@ -32,7 +32,12 @@ const userModelValidation = async (req,res,next) =>{
                 nameError:errors.name,
                 emailError:errors.email,
                 passwordError:errors.password,
-                repeatedPasswordError:errors.repeatedPassword
+                repeatedPasswordError:errors.repeatedPassword,
+                user: {
+                    name: req.body.name,
+                    email: req.body.email,
+                    password: req.body.password
+                }
             })
             
         }
