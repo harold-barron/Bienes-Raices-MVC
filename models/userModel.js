@@ -4,15 +4,20 @@ import db from "../db/db.js";
 const User = db.define('users', {
     name: {
         type: DataTypes.STRING,
-        allowNull: false
+        required:true,
+        trim: true,
     },
     email: {
         type: DataTypes.STRING,
-        allowNull: false
+        unique: true,
+        required: true,
+        trim: true,
+        lowercase: true
     },
     password: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        
     },
     token: DataTypes.STRING,
     confirmed: DataTypes.BOOLEAN
