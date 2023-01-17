@@ -9,6 +9,7 @@ const port =process.env.PORT
 
 app.use(express.urlencoded({extended:true}))
 
+app.use(cookieParser())
 
 try{
     await db.authenticate();
