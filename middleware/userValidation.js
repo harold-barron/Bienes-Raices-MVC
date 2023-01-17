@@ -36,6 +36,7 @@ const userModelValidation = async (req,res,next) =>{
                 emailError:errors.email,
                 passwordError:errors.password,
                 repeatedPasswordError:errors.repeatedPassword,
+                csrfToken: req.csrfToken(),
                 user: {
                     name: req.body.name,
                     email: req.body.email,
@@ -56,6 +57,7 @@ const emailValidation = async (req,res,next) =>{
         return res.render('auth/sign_up', {
             page: 'Create account',
             emailError: 'Email already in use',
+            csrfToken: req.csrfToken(),
             user: {
                 name: req.body.name,
                 email: req.body.email,
