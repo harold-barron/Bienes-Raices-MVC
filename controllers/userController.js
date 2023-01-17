@@ -1,3 +1,4 @@
+import { where } from 'sequelize'
 import User from '../models/userModel.js'
 
 const loginForm = (req,res) =>{
@@ -13,8 +14,7 @@ const signUpForm = (req,res) =>{
 }
 
 const createAccount = async(req,res) =>{
-    //console.log(req.body)
-
+    ////console.log(req.body)
     const newUser = await User.create(req.body)
     res.json(newUser)
 }

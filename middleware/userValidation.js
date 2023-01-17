@@ -1,4 +1,6 @@
 import { check, validationResult } from "express-validator";
+import User from '../models/userModel.js'
+
 const userModelValidation = async (req,res,next) =>{
     try{
         await check('name').notEmpty().withMessage('Please write your name').run(req)
@@ -6,6 +8,7 @@ const userModelValidation = async (req,res,next) =>{
         await check('password').notEmpty().withMessage('Please write your password').isLength({min:6}).withMessage('Your password must have at least 6 digits').run(req)
         await check('repeatedPassword').equals(req.body.password).withMessage('Passwords do not match').run(req)
         let nameResult = validationResult(req)
+        
         if(!nameResult.isEmpty()){
             let resultsArray = nameResult.array()
             let  errors = {}
@@ -24,9 +27,9 @@ const userModelValidation = async (req,res,next) =>{
                     errors.repeatedPassword = element.msg
                     
                     console.log(req.body.repeatedPassword)
-                } 
+                }
             });
-            console.log(errors)
+            //console.log(errors,resultsArray)
             return res.render('auth/sign_up', {
                 page: 'Create account',
                 nameError:errors.name,
@@ -39,16 +42,29 @@ const userModelValidation = async (req,res,next) =>{
                     password: req.body.password
                 }
             })
-            
         }
-        
+       
         next()
     }catch(error){
-        console.log(error)
+        //console.log(error)
         return res.json(error)
     }
 }
-
+const emailValidation = async (req,res,next) =>{
+    const isNotNewUser = await User.findOne({where :{email: req.body.email}})
+    if (isNotNewUser){
+        return res.render('auth/sign_up', {
+            page: 'Create account',
+            emailError: 'Email already in use',
+            user: {
+                name: req.body.name,
+                email: req.body.email,
+            }
+        })
+    }
+    next()
+}
 export{
-    userModelValidation
+    userModelValidation,
+    emailValidation
 } 
