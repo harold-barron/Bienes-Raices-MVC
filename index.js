@@ -11,6 +11,8 @@ app.use(express.urlencoded({extended:true}))
 
 app.use(cookieParser())
 
+app.use(csurf({cookie:true}))
+
 try{
     await db.authenticate();
     db.sync()
