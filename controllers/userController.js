@@ -14,8 +14,13 @@ const signUpForm = (req,res) =>{
 }
 
 const createAccount = async(req,res) =>{
-    ////console.log(req.body)
-    const newUser = await User.create(req.body)
+    const {name,email,password,token} = req.body
+    const newUser = await User.create({
+        name,
+        email,
+        password,
+        token
+    })
     res.json(newUser)
 }
 
