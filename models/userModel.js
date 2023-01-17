@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 import db from "../db/db.js";
-
+import bcryp from 'bcrypt'
 const User = db.define('users', {
     name: {
         type: DataTypes.STRING,
@@ -22,7 +22,15 @@ const User = db.define('users', {
     },
     token: DataTypes.STRING,
     confirmed: DataTypes.BOOLEAN
-
+}, {
+        hooks : {
+            beforeCreate: async function (user) {
+                const salt = await bcryp.genSalt(10)
+                const password = await user.password
+                const hash = bcryp.hashSync(password,salt)
+                user.password = hash
+            }
+        }
 })
 
 export default User;
