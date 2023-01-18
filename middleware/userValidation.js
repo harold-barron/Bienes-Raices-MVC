@@ -43,19 +43,36 @@ const emailValidation = async (req,res,next) =>{
 }
 
 const resetPasswordValidation = async (req,res,next)=>{
+    console.log('validator')
     let errors  = await userModelValidators(req)
     if(errors.email){
         return res.render('auth/resetPassword', {
             page: 'Reset password',
             csrfToken: req.csrfToken(),
-            emailError:errors.email
+            emailError:errors.email,
+            passwordError:errors.password
         })
     }
     
     next()
 }
+
+const newPasswordValidation = async (req,res,next) =>{
+    let errors = await userModelValidators(req)
+    
+    if(errors.password || errors.repeatedPassword){
+        return res.render('auth/newPassword', {
+            page: 'Reset password',
+            csrfToken: req.csrfToken(),
+            passwordError:errors.password,
+            repeatedPasswordError:errors.repeatedPassword
+        })
+    }
+    next()
+}
 export{
     userModelValidation,
     emailValidation,
-    resetPasswordValidation
+    resetPasswordValidation,
+    newPasswordValidation
 } 
