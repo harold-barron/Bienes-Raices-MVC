@@ -49,12 +49,13 @@ const validateAccount = async (req,res) =>{
 const resetPasswordForm = (req,res) =>{
     res.render('auth/resetPassword', {
         page: 'Reset password',
-        csrfToken: req.csrfToken()
-        
+        csrfToken: req.csrfToken() 
     })
 }
 const resetPassword = (req,res) =>{
-    console.log('reset pass')
+    res.json({
+        msg:'hola'
+    })
 }
 export {
     loginForm,

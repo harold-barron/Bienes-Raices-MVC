@@ -1,35 +1,11 @@
 import { check, validationResult } from "express-validator";
+import { userModelValidators } from "../utils/userFunctions.js";
 import User from '../models/userModel.js'
 
 const userModelValidation = async (req,res,next) =>{
     try{
-        await check('name').notEmpty().withMessage('Please write your name').run(req)
-        await check('email').notEmpty().withMessage('Please write a valid email direcction').run(req)
-        await check('password').notEmpty().withMessage('Please write your password').isLength({min:6}).withMessage('Your password must have at least 6 digits').run(req)
-        await check('repeatedPassword').equals(req.body.password).withMessage('Passwords do not match').run(req)
-        let nameResult = validationResult(req)
-        
-        if(!nameResult.isEmpty()){
-            let resultsArray = nameResult.array()
-            let  errors = {}
-            const errorsArray = resultsArray.forEach(element => {                    
-                if(element.param === 'name'){
-                    errors.name = element.msg
-                }  
-                if(element.param === 'email'){
-                    errors.email = element.msg
-                }   
-                if(element.param === 'password'){
-                    errors.password = element.msg
-                    
-                }    
-                if(element.param === 'repeatedPassword'){
-                    errors.repeatedPassword = element.msg
-                    
-                    console.log(req.body.repeatedPassword)
-                }
-            });
-            //console.log(errors,resultsArray)
+        let errors  = await userModelValidators(req)
+        if(errors){
             return res.render('auth/sign_up', {
                 page: 'Create account',
                 nameError:errors.name,
@@ -44,7 +20,6 @@ const userModelValidation = async (req,res,next) =>{
                 }
             })
         }
-       
         next()
     }catch(error){
         //console.log(error)
@@ -66,7 +41,21 @@ const emailValidation = async (req,res,next) =>{
     }
     next()
 }
+
+const resetPasswordValidation = async (req,res,next)=>{
+    let errors  = await userModelValidators(req)
+    if(errors.email){
+        return res.render('auth/resetPassword', {
+            page: 'Reset password',
+            csrfToken: req.csrfToken(),
+            emailError:errors.email
+        })
+    }
+    
+    next()
+}
 export{
     userModelValidation,
-    emailValidation
+    emailValidation,
+    resetPasswordValidation
 } 
