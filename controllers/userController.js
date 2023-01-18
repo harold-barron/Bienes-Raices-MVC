@@ -53,14 +53,19 @@ const validateAccount = async (req,res) =>{
 
 const resetPasswordForm = (req,res) =>{
     res.render('auth/resetPassword', {
-        page: 'Reset password'
+        page: 'Reset password',
+        csrfToken: req.csrfToken()
+        
     })
 }
-
+const resetPassword = (req,res) =>{
+    console.log('reset pass')
+}
 export {
     loginForm,
     signUpForm,
     createAccount,
     validateAccount,
-    resetPasswordForm
+    resetPasswordForm,
+    resetPassword
 }
