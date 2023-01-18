@@ -9,7 +9,6 @@ const confirmationEmail = async ({name,email,token}) =>{
           pass: process.env.EMAIL_PASSWORD
         }
       });
-
     await transport.sendMail({
         from: 'BienesRaices.com',
         to: email,
