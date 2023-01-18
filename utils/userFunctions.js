@@ -41,7 +41,17 @@ const userModelValidators = async function (req) {
             return errors
         }
 }
+
+const findUserByEmail = async (data) =>{
+    const {email} = await data
+    const validEmail = await User.findOne({where :{email}})
+    if(!validEmail){
+        return false
+    }
+    return validEmail
+}
 export {
     createUser,
-    userModelValidators
+    userModelValidators,
+    findUserByEmail
 }
