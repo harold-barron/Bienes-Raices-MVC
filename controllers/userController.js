@@ -1,8 +1,8 @@
 import { where } from 'sequelize'
 import User from '../models/userModel.js'
 import { generateID } from '../utils/tokens.js'
-import { confirmationEmail } from '../utils/emails.js'
-import { createUser } from '../utils/userFunctions.js'
+import { confirmationEmail,resetPasswordEmail } from '../utils/emails.js'
+import { createUser,findUserByEmail} from '../utils/userFunctions.js'
 const loginForm = (req,res) =>{
     res.render('auth/login', {
         page:'Login'
@@ -52,10 +52,24 @@ const resetPasswordForm = (req,res) =>{
         csrfToken: req.csrfToken() 
     })
 }
-const resetPassword = (req,res) =>{
-    res.json({
-        msg:'hola'
+const resetPassword = async (req,res) =>{
+    const userfinded = await findUserByEmail(req.body)
+    if(!userfinded)
+    {
+        return res.render('auth/resetPassword', {
+            page: 'Reset password',
+            csrfToken: req.csrfToken(),
+            emailError:'your email is not in use'
+        })
+    }
+    userfinded.token = generateID()
+    await userfinded.save()
+    resetPasswordEmail(userfinded)
+    res.render('templates/confirmationURL', {
+        page: 'Instructions sended',
+        message: 'We sended the instructions to your email'
     })
+    
 }
 export {
     loginForm,
