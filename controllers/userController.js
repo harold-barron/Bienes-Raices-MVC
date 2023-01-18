@@ -2,7 +2,8 @@ import { where } from 'sequelize'
 import User from '../models/userModel.js'
 import { generateID } from '../utils/tokens.js'
 import { confirmationEmail,resetPasswordEmail } from '../utils/emails.js'
-import { createUser,findUserByEmail} from '../utils/userFunctions.js'
+import { createUser,findUserByEmail,hashPassword} from '../utils/userFunctions.js'
+
 const loginForm = (req,res) =>{
     res.render('auth/login', {
         page:'Login'
@@ -52,6 +53,7 @@ const resetPasswordForm = (req,res) =>{
         csrfToken: req.csrfToken() 
     })
 }
+
 const resetPassword = async (req,res) =>{
     const userfinded = await findUserByEmail(req.body)
     if(!userfinded)
@@ -64,6 +66,7 @@ const resetPassword = async (req,res) =>{
     }
     userfinded.token = generateID()
     await userfinded.save()
+    
     resetPasswordEmail(userfinded)
     res.render('templates/confirmationURL', {
         page: 'Instructions sended',
@@ -81,15 +84,30 @@ const validateResetToken = async (req,res) =>{
             error: true
         })
     }
-
-    validUser.token = null
-    validUser.confirmed = true
-    await validUser.save()
-    
+  
     return res.render('auth/newPassword', {
         page: 'Reset password',
-        message: 'Enter the new password'
+        message: 'Enter the new password',
+        csrfToken: req.csrfToken()
     })
+}
+const setNewPassword = async (req,res) =>{
+    
+    const {token} = req.params
+    const {password }=req.body
+
+    const currentUser = await User.findOne({where:{token}})
+    
+    const hashpass = await hashPassword(password)
+
+    currentUser.password = hashpass
+    currentUser.token = null
+    await currentUser.save()
+    res.render('templates/confirmationURL', {
+        page: 'password changed',
+        message: 'password changed successfully',
+    })
+    
 }
 
 export {
@@ -99,5 +117,6 @@ export {
     validateAccount,
     resetPasswordForm,
     resetPassword,
-    validateResetToken
+    validateResetToken,
+    setNewPassword
 }
