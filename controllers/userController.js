@@ -71,11 +71,33 @@ const resetPassword = async (req,res) =>{
     })
     
 }
+const validateResetToken = async (req,res) =>{
+    const {token} = await req.params
+    const validUser = await User.findOne({where :{token}})
+    if(!validUser){
+        return res.render('auth/invalidToken', {
+            page: 'Something went wrong',
+            message: 'We cant find your credentials please try again',
+            error: true
+        })
+    }
+
+    validUser.token = null
+    validUser.confirmed = true
+    await validUser.save()
+    
+    return res.render('auth/newPassword', {
+        page: 'Reset password',
+        message: 'Enter the new password'
+    })
+}
+
 export {
     loginForm,
     signUpForm,
     createAccount,
     validateAccount,
     resetPasswordForm,
-    resetPassword
+    resetPassword,
+    validateResetToken
 }
