@@ -2,8 +2,8 @@ import { where } from 'sequelize'
 import { check, validationResult } from "express-validator";
 import User from "../models/userModel.js";
 import { generateID } from "./tokens.js";
+import bcryp from 'bcrypt'
 
-//import { confirmationEmail } from "./emails";
 
 const createUser =  async function(data) {
     const {name,email,password} = data
@@ -50,8 +50,17 @@ const findUserByEmail = async (data) =>{
     }
     return validEmail
 }
+
+const hashPassword = async (pass) =>{
+        const salt = await bcryp.genSalt(10)
+        const password = await pass
+        const hash = bcryp.hashSync(password,salt)
+        return hash
+    
+}
 export {
     createUser,
     userModelValidators,
-    findUserByEmail
+    findUserByEmail,
+    hashPassword
 }
