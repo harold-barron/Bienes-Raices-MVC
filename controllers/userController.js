@@ -6,7 +6,8 @@ import { createUser,findUserByEmail,hashPassword} from '../utils/userFunctions.j
 
 const loginForm = (req,res) =>{
     res.render('auth/login', {
-        page:'Login'
+        page:'Login',
+        csrfToken: req.csrfToken() 
     })
 }
 
@@ -110,6 +111,13 @@ const setNewPassword = async (req,res) =>{
     
 }
 
+
+const loginAuth = async (req,res) => {
+    res.json({
+        email: req.body.email
+    })
+}
+
 export {
     loginForm,
     signUpForm,
@@ -118,5 +126,6 @@ export {
     resetPasswordForm,
     resetPassword,
     validateResetToken,
-    setNewPassword
+    setNewPassword,
+    loginAuth
 }

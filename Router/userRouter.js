@@ -1,10 +1,10 @@
 import express from "express";
-import {loginForm, signUpForm,createAccount,validateAccount,resetPasswordForm,resetPassword,validateResetToken,setNewPassword,authenticate} from '../controllers/userController.js'
+import {loginForm, signUpForm,createAccount,validateAccount,resetPasswordForm,resetPassword,validateResetToken,setNewPassword,loginAuth} from '../controllers/userController.js'
 import {userModelValidation,emailValidation,resetPasswordValidation,newPasswordValidation,loginValidation} from "../middleware/userValidation.js"
 const router = express.Router()
 
 router.get('/login',loginForm)
-router.post('/login',loginValidation,authenticate)
+router.post('/login',loginValidation,loginAuth)
 
 
 router.get('/sign-up',signUpForm)
