@@ -113,9 +113,30 @@ const setNewPassword = async (req,res) =>{
 
 
 const loginAuth = async (req,res) => {
-    res.json({
-        email: req.body.email
-    })
+    console.log(req.body.email)
+    const userRegistered = await findUserByEmail(req.body)
+    if(!userRegistered){
+        return res.render('auth/login', {
+            page: 'Reset password',
+            csrfToken: req.csrfToken(),
+            emailError:'email not finded',
+        })
+    }
+    if(!userRegistered.confirmed){
+        return res.render('auth/login', {
+            page: 'Reset password',
+            csrfToken: req.csrfToken(),
+            emailError:'Please confirm your email in the link sended to you',
+        })
+    }
+    const corretPass=userRegistered.verifyPassword(req.body.password)
+    if(!corretPass){
+        return res.render('auth/login', {
+            page: 'Reset password',
+            csrfToken: req.csrfToken(),
+            passwordError: 'Incorrect Password ',
+        })
+    }
 }
 
 export {
