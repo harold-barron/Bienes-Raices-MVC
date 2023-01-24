@@ -43,7 +43,6 @@ const emailValidation = async (req,res,next) =>{
 }
 
 const resetPasswordValidation = async (req,res,next)=>{
-    console.log('validator')
     let errors  = await userModelValidators(req)
     if(errors.email){
         return res.render('auth/resetPassword', {
@@ -70,9 +69,26 @@ const newPasswordValidation = async (req,res,next) =>{
     }
     next()
 }
+
+const loginValidation = async (req,res,next) =>{
+    let errors  = await userModelValidators(req)
+    if(errors.email || errors.password){
+        return res.render('auth/login', {
+            page: 'Reset password',
+            csrfToken: req.csrfToken(),
+            emailError:errors.email,
+            passwordError:errors.password,
+            user:{
+                email: req.body.email
+            }
+        })
+    }
+    next()
+}
 export{
     userModelValidation,
     emailValidation,
     resetPasswordValidation,
-    newPasswordValidation
+    newPasswordValidation,
+    loginValidation
 } 
