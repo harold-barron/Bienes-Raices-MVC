@@ -1,9 +1,12 @@
 import express from "express";
-import {loginForm, signUpForm,createAccount,validateAccount,resetPasswordForm,resetPassword,validateResetToken,setNewPassword} from '../controllers/userController.js'
-import {userModelValidation,emailValidation,resetPasswordValidation,newPasswordValidation} from "../middleware/userValidation.js"
+import {loginForm, signUpForm,createAccount,validateAccount,resetPasswordForm,resetPassword,validateResetToken,setNewPassword,authenticate} from '../controllers/userController.js'
+import {userModelValidation,emailValidation,resetPasswordValidation,newPasswordValidation,loginValidation} from "../middleware/userValidation.js"
 const router = express.Router()
 
 router.get('/login',loginForm)
+router.post('/login',loginValidation,authenticate)
+
+
 router.get('/sign-up',signUpForm)
 router.post('/sign-up',userModelValidation,emailValidation,createAccount)
 router.get('/confirm/:token', validateAccount)
