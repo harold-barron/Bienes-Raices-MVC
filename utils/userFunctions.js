@@ -16,8 +16,9 @@ const createUser =  async function(data) {
 }
 
 const userModelValidators = async function (req) {
+
     await check('name').notEmpty().withMessage('Please write your name').run(req)
-    await check('email').notEmpty().withMessage('Please write a valid email direcction').run(req)
+    await check('email').notEmpty().isEmail().withMessage('Please write a valid email direcction').run(req)
     await check('password').notEmpty().withMessage('Please write your password').isLength({min:6}).withMessage('Your password must have at least 6 digits').run(req)
     await check('repeatedPassword').equals(req.body.password).withMessage('Passwords do not match').run(req)
     let nameResult = validationResult(req)
