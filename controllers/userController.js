@@ -1,6 +1,6 @@
 import { where } from 'sequelize'
 import User from '../models/userModel.js'
-import { generateID } from '../utils/tokens.js'
+import { generateID,createJWT} from '../utils/tokens.js'
 import { confirmationEmail,resetPasswordEmail } from '../utils/emails.js'
 import { createUser,findUserByEmail,hashPassword} from '../utils/userFunctions.js'
 
@@ -10,14 +10,12 @@ const loginForm = (req,res) =>{
         csrfToken: req.csrfToken() 
     })
 }
-
 const signUpForm = (req,res) =>{
     res.render('auth/sign_up', {
         page: 'Create account',
         csrfToken: req.csrfToken()
     })
 }
-
 const createAccount = async(req,res) =>{
     const newUser = await createUser(req.body)
     confirmationEmail(newUser)
@@ -26,7 +24,6 @@ const createAccount = async(req,res) =>{
         message: 'We sended you a verification link to your email please verify your account'
     })
 }
-
 const validateAccount = async (req,res) =>{
     const {token} = await req.params
     const validUser = await User.findOne({where :{token}})
@@ -47,14 +44,12 @@ const validateAccount = async (req,res) =>{
         message: 'Account created succesfully'
     })
 }
-
 const resetPasswordForm = (req,res) =>{
     res.render('auth/resetPassword', {
         page: 'Reset password',
         csrfToken: req.csrfToken() 
     })
 }
-
 const resetPassword = async (req,res) =>{
     const userfinded = await findUserByEmail(req.body)
     if(!userfinded)
@@ -110,8 +105,6 @@ const setNewPassword = async (req,res) =>{
     })
     
 }
-
-
 const loginAuth = async (req,res) => {
     console.log(req.body.email)
     const userRegistered = await findUserByEmail(req.body)
@@ -132,12 +125,20 @@ const loginAuth = async (req,res) => {
     const corretPass=userRegistered.verifyPassword(req.body.password)
     if(!corretPass){
         return res.render('auth/login', {
-            page: 'Reset password',
+            page: 'LOGIN',
             csrfToken: req.csrfToken(),
             passwordError: 'Incorrect Password ',
         })
     }
+
+    const token = generateID(userRegistered.id)
+    return res.cookie('_token', token, {
+        httpOnly: true,
+        //secure: true //only in deploys with https
+    })
+    console.log(token)
 }
+
 
 export {
     loginForm,
