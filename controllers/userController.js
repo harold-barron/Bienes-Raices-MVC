@@ -135,8 +135,7 @@ const loginAuth = async (req,res) => {
     return res.cookie('_token', token, {
         httpOnly: true,
         //secure: true //only in deploys with https
-    })
-    console.log(token)
+    }).redirect('/my-properties')
 }
 
 
