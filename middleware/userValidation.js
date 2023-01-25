@@ -74,7 +74,7 @@ const loginValidation = async (req,res,next) =>{
     let errors  = await userModelValidators(req)
     if(errors.email || errors.password){
         return res.render('auth/login', {
-            page: 'Reset password',
+            page: 'LOGIN',
             csrfToken: req.csrfToken(),
             emailError:errors.email,
             passwordError:errors.password,
